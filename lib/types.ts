@@ -9,6 +9,18 @@ export type SceneObject = {
   noun: string;
   english: string;
   category: string;
-  /** Hotspot on scene image (% of container) */
-  hotspot: { top: string; left: string };
+  highlight: { top: string; left: string };
+  highlightW: number;
+  highlightH: number;
+  highlightRound?: boolean;
+  marker: { top: string; left: string };
+};
+
+export type SceneDefinition = {
+  id: string;
+  name: string;
+  emoji: string;
+  /** Path under public/, e.g. /scenes/kitchen.jpg */
+  image: string;
+  objects: SceneObject[];
 };

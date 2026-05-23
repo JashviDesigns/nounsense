@@ -1,6 +1,6 @@
 # NounSense
 
-A digital sticky-note game that helps German learners master grammatical gender (**der**, **die**, **das**) through visual scene exploration — no pressure, no rote memorization.
+A digital sticky-note game that helps German learners master grammatical gender (**der**, **die**, **das**) through visual scene exploration.
 
 ## Quick start
 
@@ -11,24 +11,38 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Scene image
+## 10 worlds
 
-Add your living room artwork:
+| Scene | Image path | Status |
+|-------|------------|--------|
+| 🏠 Living Room | `public/scenes/living-room.jpg` | ✅ calibrated |
+| 🍳 Kitchen | `public/scenes/kitchen.jpg` | add image + calibrate |
+| 🍽️ Restaurant | `public/scenes/restaurant.jpg` | add image + calibrate |
+| 🚗 Street | `public/scenes/street.jpg` | add image + calibrate |
+| 💻 Office | `public/scenes/office.jpg` | add image + calibrate |
+| 🛁 Bathroom | `public/scenes/bathroom.jpg` | add image + calibrate |
+| 🛏️ Bedroom | `public/scenes/bedroom.jpg` | add image + calibrate |
+| 🛒 Supermarket | `public/scenes/supermarket.jpg` | add image + calibrate |
+| 🏫 School | `public/scenes/school.jpg` | add image + calibrate |
+| 🌿 Nature | `public/scenes/nature.jpg` | add image + calibrate |
 
-```
-public/scenes/living-room.png
-```
+Each scene has **10 nouns** from the PRD A1–B1 list. Switch worlds from the picker on the home screen.
 
-Until that file exists, a pastel placeholder is shown. Hotspot positions (numbered 1–12) are in `data/living-room.ts` — adjust `top` / `left` % after you add art.
+### Calibrate a new scene
+
+1. Add `public/scenes/{scene-id}.jpg`
+2. Open `http://localhost:3000/calibrate?scene=kitchen` (etc.)
+3. Place **highlight** on each object, then **marker** for the number
+4. Copy the TypeScript snippet into `data/scenes/{scene-id}.ts`
 
 ## Features
 
-- Living room with 12 labelable objects (PRD noun list)
-- Tap hotspots or noun buttons, then pick **der** / **die** / **das**
-- 8-bit chiptune BGM + arcade SFX
-- XP, streaks, success overlay
-- PRD color palette
+- Image scenes with object highlights + numbered markers
+- 8-bit sound, XP, streaks, success overlay
+- Smart hints with ending rules (`lib/article-hints.ts`)
 
 ## Roadmap
 
-Custom scene art, kitchen/café worlds, drag-and-drop labels, Focus/Exam modes.
+- **Weak noun vault** — save misses in `localStorage`, resurface in review
+- Richer hints (mnemonics, not just category rules)
+- Focus / Exam modes, drag-and-drop labels

@@ -1,19 +1,31 @@
 "use client";
 
+import Link from "next/link";
+
 type Props = {
+  sceneName: string;
+  sceneEmoji: string;
   xp: number;
   bestStreak: number;
   accuracy: number;
   totalAttempts: number;
+  nextSceneId?: string;
+  nextSceneName?: string;
   onPlayAgain: () => void;
+  onBackToWorlds: () => void;
 };
 
 export function SuccessOverlay({
+  sceneName,
+  sceneEmoji,
   xp,
   bestStreak,
   accuracy,
   totalAttempts,
+  nextSceneId,
+  nextSceneName,
   onPlayAgain,
+  onBackToWorlds,
 }: Props) {
   return (
     <div
@@ -24,7 +36,6 @@ export function SuccessOverlay({
     >
       <div className="absolute inset-0 bg-zinc-900/50 backdrop-blur-md" />
 
-      {/* Confetti */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         {Array.from({ length: 48 }).map((_, i) => (
           <span
@@ -44,15 +55,15 @@ export function SuccessOverlay({
       </div>
 
       <div className="success-card relative z-10 w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl">
-        <div className="mb-2 text-center text-5xl">🏆</div>
+        <div className="mb-2 text-center text-5xl">{sceneEmoji}</div>
         <h2
           id="success-title"
           className="text-center text-2xl font-bold text-zinc-900"
         >
-          Room Mastered!
+          {sceneName} mastered!
         </h2>
         <p className="mt-2 text-center text-zinc-600">
-          Every object in the living room is labeled. Die agrees 🌿
+          Every object labeled. Nice work!
         </p>
 
         <div className="mt-6 grid grid-cols-3 gap-3">
@@ -62,16 +73,33 @@ export function SuccessOverlay({
         </div>
 
         <p className="mt-4 text-center text-xs text-zinc-400">
-          {totalAttempts} total attempts · Kitchen world unlocks next
+          {totalAttempts} attempts
         </p>
 
-        <button
-          type="button"
-          onClick={onPlayAgain}
-          className="mt-6 w-full rounded-2xl bg-gradient-to-r from-mauve to-pink-mist py-3.5 text-lg font-bold text-white shadow-lg transition hover:scale-[1.02] active:scale-[0.98]"
-        >
-          Play again
-        </button>
+        <div className="mt-6 flex flex-col gap-2">
+          {nextSceneId && nextSceneName && (
+            <Link
+              href={`/play/${nextSceneId}`}
+              className="w-full rounded-2xl bg-gradient-to-r from-mauve to-pink-mist py-3.5 text-center text-lg font-bold text-white shadow-lg transition hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Next: {nextSceneName} →
+            </Link>
+          )}
+          <button
+            type="button"
+            onClick={onPlayAgain}
+            className="w-full rounded-2xl bg-white py-3 text-base font-semibold text-zinc-800 shadow ring-1 ring-zinc-200 transition hover:bg-zinc-50"
+          >
+            Play again
+          </button>
+          <button
+            type="button"
+            onClick={onBackToWorlds}
+            className="w-full rounded-2xl py-2.5 text-sm font-medium text-zinc-500 transition hover:text-mauve"
+          >
+            ← Back to worlds
+          </button>
+        </div>
       </div>
     </div>
   );

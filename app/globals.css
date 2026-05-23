@@ -58,6 +58,24 @@
   animation: stick-pop 0.35s ease-out forwards;
 }
 
+@keyframes hint-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 4px 14px rgba(251, 191, 36, 0.35),
+      0 0 0 0 rgba(251, 191, 36, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 6px 20px rgba(251, 191, 36, 0.5),
+      0 0 0 4px rgba(251, 191, 36, 0.15);
+  }
+}
+
+.hint-banner {
+  animation: hint-glow 2s ease-in-out infinite;
+}
+
 @keyframes toast-in {
   from {
     opacity: 0;

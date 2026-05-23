@@ -9,6 +9,31 @@ type Props = {
   comboMultiplier: number;
 };
 
+function HudPill({
+  label,
+  value,
+  className = "bg-white/80",
+  valueClassName = "",
+}: {
+  label: string;
+  value: React.ReactNode;
+  className?: string;
+  valueClassName?: string;
+}) {
+  return (
+    <div
+      className={`flex h-14 flex-col justify-center rounded-xl px-4 py-2 shadow-sm ${className}`}
+    >
+      <span className="text-xs leading-none text-zinc-500">{label}</span>
+      <span
+        className={`mt-1 text-lg font-bold leading-none ${valueClassName}`}
+      >
+        {value}
+      </span>
+    </div>
+  );
+}
+
 export function GameHUD({
   xp,
   level,
@@ -37,30 +62,34 @@ export function GameHUD({
         </div>
       </div>
 
-      <div className="rounded-xl bg-white/80 px-4 py-2 shadow-sm">
-        <span className="text-xs text-zinc-500">Accuracy</span>
-        <p className="text-lg font-bold text-emerald-700">{accuracy}%</p>
-      </div>
+      <HudPill
+        label="Accuracy"
+        value={`${accuracy}%`}
+        valueClassName="text-emerald-700"
+      />
 
       {streak >= 2 && (
-        <div
-          className={`rounded-xl px-4 py-2 shadow-sm transition-all ${
+        <HudPill
+          label="Combo"
+          value={
+            <>
+              🔥 {streak}x {comboMultiplier > 1 && `(×${comboMultiplier})`}
+            </>
+          }
+          className={
             streak >= 5
-              ? "animate-pulse bg-gradient-to-r from-orange-400 to-pink-500 text-white"
-              : "bg-mauve/30 text-purple-900"
-          }`}
-        >
-          <span className="text-xs font-medium uppercase">Combo</span>
-          <p className="text-lg font-bold">
-            🔥 {streak}x {comboMultiplier > 1 && `(×${comboMultiplier})`}
-          </p>
-        </div>
+              ? "animate-pulse bg-gradient-to-r from-orange-400 to-pink-500 text-white [&_span:first-child]:text-white/90"
+              : "bg-mauve/30 text-purple-900 [&_span:first-child]:text-purple-800/80"
+          }
+        />
       )}
 
       {bestStreak > 0 && (
-        <div className="rounded-xl bg-vanilla-custard/60 px-3 py-2 text-sm text-amber-950">
-          Best: {bestStreak}🔥
-        </div>
+        <HudPill
+          label="Best streak"
+          value={`${bestStreak}🔥`}
+          className="bg-vanilla-custard/60 text-amber-950 [&_span:first-child]:text-amber-900/70"
+        />
       )}
     </div>
   );

@@ -1,6 +1,8 @@
 "use client";
 
+import type { ArticleHint } from "@/lib/article-hints";
 import type { Article, SceneObject } from "@/lib/types";
+import { HintBanner } from "./HintBanner";
 
 const ARTICLES: { value: Article; label: string; bg: string; text: string }[] = [
   { value: "der", label: "der", bg: "bg-icy-blue", text: "text-sky-900" },
@@ -14,7 +16,7 @@ type Props = {
   labeledIds: Set<string>;
   labeledCount: number;
   total: number;
-  hint: string | null;
+  hint: ArticleHint | null;
   feedback: "correct" | "wrong" | null;
   lastXpGain: number | null;
   onSelectObject: (id: string) => void;
@@ -40,7 +42,7 @@ export function GamePanel({
     <div className="flex h-full flex-col gap-5 rounded-2xl bg-white/70 p-5 shadow-lg backdrop-blur-sm">
       <p className="text-sm text-zinc-600">
         <span className="mr-1">📍</span>
-        Tap an object number on the scene, or tap a name below:
+        Tap an object in the scene, or choose a name below:
       </p>
 
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -88,11 +90,16 @@ export function GamePanel({
       <div className="flex flex-1 flex-col items-center justify-center rounded-2xl bg-white/50 px-4 py-8">
         {selected ? (
           <>
-            <p className="mb-6 text-center text-lg text-zinc-700">
+            <p className="mb-4 text-center text-lg text-zinc-700">
               What is the article for{" "}
               <span className="font-bold text-mauve">{selected.noun}</span>?
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+
+            {hint && <HintBanner text={hint.text} />}
+
+            <div
+              className={`flex flex-wrap justify-center gap-4 ${hint ? "mt-5" : "mt-2"}`}
+            >
               {ARTICLES.map(({ value, label, bg, text }) => (
                 <button
                   key={value}
@@ -104,9 +111,6 @@ export function GamePanel({
                 </button>
               ))}
             </div>
-            {hint && (
-              <p className="mt-4 max-w-xs text-center text-sm text-zinc-500">{hint}</p>
-            )}
             {feedback === "correct" && (
               <p className="mt-3 animate-[pop-in_0.3s_ease-out] text-sm font-medium text-emerald-600">
                 Sticks! ✓ {selected.article} {selected.noun}

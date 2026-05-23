@@ -1,9 +1,9 @@
-import { NounSenseGame } from "@/components/NounSenseGame";
+import { WorldsHub } from "@/components/WorldsHub";
 
 export default function Home() {
   return (
     <main>
-      <NounSenseGame />
+      <WorldsHub />
     </main>
   );
 }
