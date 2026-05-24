@@ -13,8 +13,11 @@ export function usePlayerProgress() {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    setProgress(loadProgress());
-    setHydrated(true);
+    try {
+      setProgress(loadProgress());
+    } finally {
+      setHydrated(true);
+    }
   }, []);
 
   const updateProgress = useCallback((updater: (prev: PlayerProgress) => PlayerProgress) => {

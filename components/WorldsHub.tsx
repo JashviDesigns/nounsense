@@ -2,8 +2,10 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { SCENES } from "@/data/scenes";
+import { useEntranceReady } from "@/hooks/useEntranceReady";
 import { usePlayerProgress } from "@/hooks/usePlayerProgress";
 import { useGameAudio } from "@/hooks/useGameAudio";
+import { NounSenseLoader } from "./NounSenseLoader";
 import { getScene } from "@/data/scenes";
 import {
   getWeakNouns,
@@ -23,6 +25,7 @@ type Tab = "worlds" | "vault";
 
 export function WorldsHub() {
   const { progress, updateProgress, hydrated } = usePlayerProgress();
+  const entranceReady = useEntranceReady(hydrated);
   const [tab, setTab] = useState<Tab>("worlds");
   const [vaultFeedback, setVaultFeedback] = useState<"correct" | "wrong" | null>(
     null,
@@ -85,12 +88,8 @@ export function WorldsHub() {
     [handleFirstInteraction, updateProgress, audio],
   );
 
-  if (!hydrated) {
-    return (
-      <div className="mx-auto max-w-6xl px-4 py-16 text-center text-zinc-500">
-        Loading…
-      </div>
-    );
+  if (!entranceReady) {
+    return <NounSenseLoader />;
   }
 
   return (
