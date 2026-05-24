@@ -252,11 +252,7 @@ export function SceneGame({ sceneId }: Props) {
   );
 
   if (!hydrated) {
-    return (
-      <div className="mx-auto max-w-6xl px-4 py-16 text-center text-zinc-500">
-        Loading…
-      </div>
-    );
+    return null;
   }
 
   return (

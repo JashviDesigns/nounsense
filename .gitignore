@@ -20,6 +20,8 @@
 
 # misc
 .DS_Store
+public/splash-reference.mov
+public/splash-frames/
 *.pem
 
 # debug
